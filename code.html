@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>App Name: A Coding Project by Murilo Barbosa</title>
+    <title>FizzBuzz: A Coding Project by Murilo Barbosa</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html"><img src="img/mark3a.svg"
-                    class="d-inline-block align-text-top pb-1" width="35" height="30"> APP NAME</a>
+                    class="d-inline-block align-text-top pb-1" width="35" height="30"> FizzBuzz</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                         <a class="nav-link active" aria-current="page" href="code.html">The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">Git Repo</a>
+                        <a class="nav-link" target="_blank" href="https://github.com/murilodab/fizzbuzz">Git Repo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="https://murilo-barbosa.netlify.app/">About</a>
@@ -54,21 +54,136 @@
     <!-- ++++++++ MAIN SECTION ++++++++++++ -->
     <main class="flex-shrink-0">
         <div class="container py-5 px-5 mt-5">
-            <h2 class="border-1 border-bottom border-dark">The Code for APP NAME</h2>
+            <h2 class="border-1 border-bottom border-dark">The Code for FizzBuzz</h2>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <pre class="line-numbers"><code class="language-javascript">
-                        //Call Hello World
-                        function helloWorld(){
-                         alert("Hello World");
+                        //Get the values from the page
+                        //controller
+                        function getValues(){
+                        
+                            let fizzValue = document.getElementById("value1").value;                       
+                            let buzzValue = document.getElementById("value2").value;
+                        
+                            //Converting to int
+                            fizzValue = parseInt(fizzValue);
+                            buzzValue = parseInt(buzzValue);
+                        
+                            //validating
+                            if(Number.isInteger(fizzValue) && Number.isInteger(buzzValue)){
+                        
+                                //call FizzBuzz
+                                let fbData = FizzBuzz2(fizzValue, buzzValue);
+                        
+                                //call displayNumbers
+                                displayData(fbData);
+                            }else{                       
+                                alert("You must enter Integers!");
+                            }                        
+                        }
+                        
+                        //Generate numbers
+                        //logic
+                        //classic if/else FizzBuzz
+                        function FizzBuzz(fizzValue, buzzValue){
+                        
+                            let returnArray=[];
+                        
+                            for (let index = 1; index <= 100; index++) {                               
+                                if(index % fizzValue == 0 && index % buzzValue ==0){                      
+                                    returnArray.push("FizzBuzz");
+                     
+                                }else if(index % fizzValue == 0){                                
+                                    returnArray.push("Fizz");
+                        
+                                }else if(index % buzzValue == 0){                                   
+                                    returnArray.push("Buzz");
+                        
+                                }else{                       
+                                    returnArray.push(index);
+                                }                              
+                            }                      
+                            return returnArray;                              
+                            }
+                        
+                            //FizzBuzz with ternary operator                       
+                        function FizzBuzz2(fizzValue, buzzValue){
+                        
+                                let returnArray = [];
+                        
+                            for (let i = 1; i <= 100; i++){                    
+                                let value = ((i % fizzValue == 0 ? 'Fizz' : '') + (i % buzzValue == 0 ? 'Buzz': '') || i );                   
+                                returnArray.push(value);
+                                }     
+                            return returnArray;                      
+                            }
+                                                            
+                        //Display numbers
+                        //view
+                        function displayData(fbData){
+                        
+                            //get the table body element from the page
+                            let tableBody = document.getElementById("results");
+                        
+                            //get the template itself            
+                            let templateRow = document.getElementById("fbTemplate");
+                        
+                        
+                            //clear the table first
+                            tableBody.innerHTML= "";
+                        
+                            for (let i = 0; i < fbData.length; i+=5) {
+                        
+                                let tableRow = document.importNode(templateRow.content, true);
+                                
+                                //grab use the td's to put into array
+                        
+                                let rowCols = tableRow.querySelectorAll("td");
+                                rowCols[0].classList.add(fbData[i]);
+                                rowCols[0].textContent = fbData[i];
+                        
+                                rowCols[1].classList.add(fbData[i+1]);
+                                rowCols[1].textContent = fbData[i+1];
+                        
+                                rowCols[2].classList.add(fbData[i+2]);
+                                rowCols[2].textContent = fbData[i+2];
+                        
+                                rowCols[3].classList.add(fbData[i+3]);
+                                rowCols[3].textContent = fbData[i+3];
+                        
+                                rowCols[4].classList.add(fbData[i+4]);
+                                rowCols[4].textContent = fbData[i+4];
+                        
+                                tableBody.appendChild(tableRow);
+                            }
                         }
                     </code>
                 </pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>The code is sctructured in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that displays an alert with a message of "Hello World". </p>
+                    <p>The code is sctructured in three functions.</p>
+                    <h5>getValues</h5>
+                    <p>This function has the role of getting the values from the page in order to call the logic and
+                        display functions. It is the <strong>starter or controller</strong> function of this app. It
+                        also does the job of
+                        validating the inputs to only accept integers, otherwise it displays an alert to the user. </p>
+
+                    <h5>FizzBuzz</h5>
+                    <p>The <strong>logic</strong> function of the app. It does the job of checking if the inputs are
+                        divisible by the numbers form 1 to 100. It works by declaring an empty array "returnArray" and
+                        through a for loop it checks the user input for every number. In the if/else statement, if the
+                        input is divisible by
+                        any of the numbers in the loop it assigns "Fizz","Buzz", or "FizzBuzz" to the array. </p>
+
+                    <h5>FizzBuzz2</h5>
+                    <p>This function does the same job of the previous one, but using much less code using the ternary
+                        operator. It allows us to verify the condition (true/false) of an expression, and at the same
+                        time assign a value depending on the result of this expression.</p>
+
+                    <h5>displayData</h5>
+                    <p>The <strong>view</strong> function. To display the results on the page this function first
+                        fetches the element on the page where the results will appear. And then, using a template, it
+                        displays the formatted results.</p>
                 </div>
             </div>
         </div>
@@ -86,23 +201,25 @@
                 <div class="col-4 col-lg-2 d-flex align-items-center justify-content-start justify-content-lg-end pt-1">
                     <div class="row">
                         <div class="col-6 social">
-                            <a class="icon-link" href="https://www.linkedin.com/in/murilo-barbosa-55ab1492/" target="_blank"><i class="fab fa-linkedin fa-2x"></i>
+                            <a class="icon-link" href="https://www.linkedin.com/in/murilo-barbosa-55ab1492/"
+                                target="_blank"><i class="fab fa-linkedin fa-2x"></i>
                             </a>
                         </div>
                         <div class="col-6 social">
-                            <a class="icon-link" href="https://github.com/murilodab" target="_blank"><i class="fab fa-github fa-2x"></i>
+                            <a class="icon-link" href="https://github.com/murilodab" target="_blank"><i
+                                    class="fab fa-github fa-2x"></i>
                             </a>
-                        </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </footer>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="js/prism.js"></script>
     <script>
         Prism.plugins.NormalizeWhitespace.setDefaults({
